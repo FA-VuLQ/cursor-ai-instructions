@@ -1,0 +1,140 @@
+---
+description: Guidelines and best practices for branch creation and management
+globs: 
+alwaysApply: false
+---
+# Branching Guidelines
+
+## Branch Types
+
+Our project uses the following branch types:
+
+1. **`master`**: Production-ready code
+   - Protected branch
+   - Always deployable
+   - Direct commits prohibited
+
+2. **`develop`**: Integration branch
+   - For staging and development environments
+   - Base branch for feature development
+   - Merged into master during releases
+
+3. **`feature/*`**: New feature implementation
+   - Created from: `develop`
+   - Merge back to: `develop`
+   - Naming convention: `feature/short-description` or `feature/TICKET-ID-short-description`
+
+4. **`release/*`**: Preparing code for release
+   - Created from: `develop`
+   - Merge back to: `develop` AND `master`
+   - Naming convention: `release/vX.Y.Z`
+   - Includes version bumps, changelog updates, and final polishing
+
+5. **`bugfix/*`**: Fixes for bugs not in production
+   - Created from: `develop`
+   - Merge back to: `develop`
+   - Naming convention: `bugfix/short-description` or `bugfix/TICKET-ID-short-description`
+
+6. **`hotfix/*`**: Urgent fixes for production issues
+   - Created from: `master`
+   - Merge back to: `master` AND `develop`
+   - Naming convention: `hotfix/short-description` or `hotfix/TICKET-ID-short-description`
+   - Highest priority, bypass normal development cycle
+
+## Branch Creation Workflow
+
+### Creating a Feature Branch
+
+```bash
+# Ensure you have the latest develop
+git checkout develop
+git pull origin develop
+
+# Create and switch to the new feature branch
+git checkout -b feature/TICKET-ID-description
+
+# Push the branch to origin (first time)
+git push -u origin feature/TICKET-ID-description
+```
+
+### Creating a Bugfix Branch
+
+```bash
+# Start from develop
+git checkout develop
+git pull origin develop
+
+# Create bugfix branch
+git checkout -b bugfix/TICKET-ID-description
+
+# Push the branch to origin
+git push -u origin bugfix/TICKET-ID-description
+```
+
+### Creating a Hotfix Branch
+
+```bash
+# Start from master (production code)
+git checkout master
+git pull origin master
+
+# Create hotfix branch
+git checkout -b hotfix/TICKET-ID-description
+
+# Push the branch to origin
+git push -u origin hotfix/TICKET-ID-description
+```
+
+### Creating a Release Branch
+
+```bash
+# Start from develop
+git checkout develop
+git pull origin develop
+
+# Create release branch with version number
+git checkout -b release/vX.Y.Z
+
+# Push the branch to origin
+git push -u origin release/vX.Y.Z
+```
+
+## Merging Guidelines
+
+1. **Feature → Develop**
+   - Use pull requests/merge requests
+   - Require code review
+   - Ensure tests pass
+
+2. **Bugfix → Develop**
+   - Use pull requests/merge requests
+   - Require code review
+   - Ensure tests pass
+
+3. **Hotfix → Master & Develop**
+   - Merge to master first
+   - Tag the master merge with version
+   - Immediately merge to develop
+   - Highest priority for review
+
+4. **Release → Master & Develop**
+   - Final QA on release branch
+   - Merge to master with version tag
+   - Merge back to develop
+
+## Branch Cleanup
+
+- Delete feature/bugfix branches after successful merge
+- Keep release branches for reference
+- Tag all master merges with version numbers
+
+## Example Branch Names
+
+- `feature/user-authentication`
+- `feature/ARMT-4915-migrate-legacy-plan`
+- `bugfix/login-timeout-issue`
+- `bugfix/ARMT-5010-fix-payment-calculation`
+- `hotfix/critical-security-vulnerability`
+- `hotfix/ARMT-5100-fix-data-loss`
+- `release/v1.2.0`
+- `release/v0.9.5-beta` 

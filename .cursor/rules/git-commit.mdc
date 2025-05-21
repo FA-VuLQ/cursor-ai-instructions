@@ -175,7 +175,9 @@ git commit -m "test(scope): add tests"
 ## 8. Mandatory Diff Review
 
 ### 8.1 Pre-Commit Diff Check
+
 Before any commit, ALWAYS run:
+
 ```bash
 # Check status first
 git status | cat
@@ -188,6 +190,7 @@ git diff --staged | cat
 ```
 
 ### 8.2 Diff Review Checklist
+
 1. File Changes
    - Confirm all intended files are modified
    - No unintended file deletions
@@ -209,3 +212,7 @@ git diff --staged | cat
    - Remove debug statements
    - Fix formatting issues
    - Split into multiple commits if needed 
+
+### 9. Jira smark link
+
+Every commit and merge request is required to link with one or multiple Jira Issue. You always ask user to provide jira issue key
